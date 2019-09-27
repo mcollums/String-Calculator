@@ -1,23 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import CalculatorContainer from "./components/calculator-container.js";
+
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h5 className="text-center">String Calculator</h5>
+        <h5 className="text-center"> How it works: </h5>
+        <p className="text-center"> ... </p>
+        <CalculatorContainer />
       </header>
     </div>
   );
