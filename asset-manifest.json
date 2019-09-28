@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/mcollums/String-Calculator/static/css/main.b100e6da.chunk.css",
-    "main.js": "/mcollums/String-Calculator/static/js/main.7d727989.chunk.js",
-    "main.js.map": "/mcollums/String-Calculator/static/js/main.7d727989.chunk.js.map",
-    "runtime-main.js": "/mcollums/String-Calculator/static/js/runtime-main.18b1eff2.js",
-    "runtime-main.js.map": "/mcollums/String-Calculator/static/js/runtime-main.18b1eff2.js.map",
-    "static/css/2.0624914a.chunk.css": "/mcollums/String-Calculator/static/css/2.0624914a.chunk.css",
-    "static/js/2.512feec7.chunk.js": "/mcollums/String-Calculator/static/js/2.512feec7.chunk.js",
-    "static/js/2.512feec7.chunk.js.map": "/mcollums/String-Calculator/static/js/2.512feec7.chunk.js.map",
-    "index.html": "/mcollums/String-Calculator/index.html",
-    "precache-manifest.912d75af7c90f7c1a510e67625bec447.js": "/mcollums/String-Calculator/precache-manifest.912d75af7c90f7c1a510e67625bec447.js",
-    "service-worker.js": "/mcollums/String-Calculator/service-worker.js",
-    "static/css/2.0624914a.chunk.css.map": "/mcollums/String-Calculator/static/css/2.0624914a.chunk.css.map",
-    "static/css/main.b100e6da.chunk.css.map": "/mcollums/String-Calculator/static/css/main.b100e6da.chunk.css.map"
+    "main.css": "/String-Calculator/static/css/main.b100e6da.chunk.css",
+    "main.js": "/String-Calculator/static/js/main.f3ab1969.chunk.js",
+    "main.js.map": "/String-Calculator/static/js/main.f3ab1969.chunk.js.map",
+    "runtime-main.js": "/String-Calculator/static/js/runtime-main.cc0e7bc3.js",
+    "runtime-main.js.map": "/String-Calculator/static/js/runtime-main.cc0e7bc3.js.map",
+    "static/css/2.0624914a.chunk.css": "/String-Calculator/static/css/2.0624914a.chunk.css",
+    "static/js/2.512feec7.chunk.js": "/String-Calculator/static/js/2.512feec7.chunk.js",
+    "static/js/2.512feec7.chunk.js.map": "/String-Calculator/static/js/2.512feec7.chunk.js.map",
+    "index.html": "/String-Calculator/index.html",
+    "precache-manifest.de4799ff30a7c48f8dd9ea338cabe51e.js": "/String-Calculator/precache-manifest.de4799ff30a7c48f8dd9ea338cabe51e.js",
+    "service-worker.js": "/String-Calculator/service-worker.js",
+    "static/css/2.0624914a.chunk.css.map": "/String-Calculator/static/css/2.0624914a.chunk.css.map",
+    "static/css/main.b100e6da.chunk.css.map": "/String-Calculator/static/css/main.b100e6da.chunk.css.map"
   }
 }
