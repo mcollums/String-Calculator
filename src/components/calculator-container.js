@@ -1,34 +1,45 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Button, InputGroup, FormControl } from 'react-bootstrap';
+import './calc-cont.css';
+import Button from './Button'
+import { Container, Row, Col, InputGroup, FormControl } from 'react-bootstrap';
 
-class calculatorContainer extends Component {
+// let customDelimiters = [",", "&"];
+
+class CalculatorContainer extends Component {
     state = {
+        string: "",
+        result: "",
         message: ""
     };
 
-    handleClick = id => {
-        console.log(id);
-        if (this.state.clicked.indexOf(id) === -1) {
-            this.setState({ clicked: this.state.clicked.concat(id) }, function () {
-                console.log("Added to array " + this.state.clicked);
-                this.handleIncrement();
-            });
-        } else {
-            console.log("Already in the array " + this.state.clicked);
-            let currentLosses = this.state.losses;
-            this.setState({ losses: currentLosses + 1 })
-            console.log("Score: " + this.state.losses);
-            this.handleReset();
-        }
+    //This tracks any changes to the input box and adds it to the state.
+    handleInputChange = (event) => {
+        this.setState({
+            string: event.target.value
+        });
     };
 
-    handleReset = () => {
-        this.setState({
-            score: 0,
-            message: "You Lose. Sad Sad Day.",
-            clicked: []
-        });
-        this.handleShuffle();
+
+
+    //This function seperates the string and adds them together.
+    startAdd = () => {
+        //check if the element is a number
+        const isNum = n => isNaN(n) ? 0 : parseInt(n);
+        //Splitting the string by commas
+        let newArr = this.state.string.split(",");
+
+        //Only will add two numbers at a time seperated by a comma
+        if (newArr.length !== 2) {
+            this.setState({
+                message: "Please enter two items seperated by a comma."
+            });
+        } else {
+            this.setState({
+                message: "",
+                result: newArr.reduce((a, b) =>
+                isNum(a) + isNum(b))
+            }); 
+        }
     };
 
 
@@ -38,14 +49,25 @@ class calculatorContainer extends Component {
                 <Container>
                     <Row>
                         <Col id="titleCol">
-                            <InputGroup>
+                            <InputGroup onChange={(e) => { this.handleInputChange(e) }}>
                                 <InputGroup.Prepend>
-                                    <InputGroup.Text>With textarea</InputGroup.Text>
+                                    <InputGroup.Text>Your String Here</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl as="textarea" aria-label="With textarea" />
+                                <Button 
+                                    id="resultBtn" 
+                                    handleClick={this.startAdd}
+                                    message={"Get the Sum!"}
+                                    type="submit">
+                                </Button>
                             </InputGroup>
+                            <p> {this.state.message} </p>
+                        </Col>
+                    </Row>
 
-                            <Button> This is a button </Button>
+                    <Row>
+                        <Col>
+                            <h1> {this.state.result} </h1>
                         </Col>
                     </Row>
                 </Container>
@@ -54,4 +76,4 @@ class calculatorContainer extends Component {
     }
 }
 
-export default calculatorContainer
+export default CalculatorContainer
