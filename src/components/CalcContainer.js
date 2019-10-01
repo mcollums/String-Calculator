@@ -1,16 +1,22 @@
 import React, { Component } from "react";
-import './calc-cont.css';
+import './CalcContainer.css';
 import Button from './Button'
 import { Container, Row, Col, InputGroup, FormControl } from 'react-bootstrap';
 
 // let customDelimiters = [",", "&"];
 
 class CalculatorContainer extends Component {
-    state = {
-        string: "",
-        result: "",
-        message: ""
-    };
+    constructor (props) {
+        super(props);
+
+        this.state = {
+            string: "",
+            result: "",
+            error: "",
+            message: ""
+        };
+    }
+ 
 
     //This tracks any changes to the input box and adds it to the state.
     handleInputChange = (event) => {
@@ -31,11 +37,13 @@ class CalculatorContainer extends Component {
         //Only will add two numbers at a time seperated by a comma
         if (newArr.length !== 2) {
             this.setState({
+                error: "true",
                 message: "Please enter two items seperated by a comma."
             });
         } else {
             this.setState({
                 message: "",
+                error: "",
                 result: newArr.reduce((a, b) =>
                 isNum(a) + isNum(b))
             }); 
@@ -44,30 +52,37 @@ class CalculatorContainer extends Component {
 
 
     render() {
+        // determine whether error is hidden based on state
+        const errorClass = this.state.error ? '' : 'hidden';
+
         return (
             <div>
                 <Container>
                     <Row>
                         <Col id="titleCol">
-                            <InputGroup onChange={(e) => { this.handleInputChange(e) }}>
+                            <InputGroup 
+                                onChange={(e) => {this.handleInputChange(e)}}
+                                data-test="input-group"
+                                >
                                 <InputGroup.Prepend>
                                     <InputGroup.Text>Your String Here</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl as="textarea" aria-label="With textarea" />
                                 <Button 
-                                    id="resultBtn" 
+                                    data-test="submit-button"
+                                    id="submitBtn" 
                                     handleClick={this.startAdd}
                                     message={"Get the Sum!"}
                                     type="submit">
                                 </Button>
                             </InputGroup>
-                            <p> {this.state.message} </p>
+                            <p className={`error ${errorClass}`} data-test="error-display"> Error: {this.state.message} </p>
                         </Col>
                     </Row>
 
                     <Row>
                         <Col>
-                            <h1> {this.state.result} </h1>
+                            <h1 data-test="result-display"> {this.state.result} </h1>
                         </Col>
                     </Row>
                 </Container>

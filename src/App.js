@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import CalculatorContainer from "./components/calculator-container.js";
+import CalculatorContainer from "./components/CalcContainer.js";
 import { Row, Col } from 'react-bootstrap';
 
 
@@ -17,7 +17,7 @@ function App() {
         </Col>
       </Row>
 
-      <CalculatorContainer />
+      <CalculatorContainer data-test="component-calculator-container"/>
       
     </div>
   );
