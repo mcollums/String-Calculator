@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/String-Calculator/static/css/main.b100e6da.chunk.css",
-    "main.js": "/String-Calculator/static/js/main.f3ab1969.chunk.js",
-    "main.js.map": "/String-Calculator/static/js/main.f3ab1969.chunk.js.map",
-    "runtime-main.js": "/String-Calculator/static/js/runtime-main.cc0e7bc3.js",
-    "runtime-main.js.map": "/String-Calculator/static/js/runtime-main.cc0e7bc3.js.map",
-    "static/css/2.0624914a.chunk.css": "/String-Calculator/static/css/2.0624914a.chunk.css",
-    "static/js/2.512feec7.chunk.js": "/String-Calculator/static/js/2.512feec7.chunk.js",
-    "static/js/2.512feec7.chunk.js.map": "/String-Calculator/static/js/2.512feec7.chunk.js.map",
+    "main.css": "/String-Calculator/static/css/main.f59af3de.chunk.css",
+    "main.js": "/String-Calculator/static/js/main.ea5ffe0d.chunk.js",
+    "main.js.map": "/String-Calculator/static/js/main.ea5ffe0d.chunk.js.map",
+    "runtime-main.js": "/String-Calculator/static/js/runtime-main.75ed3916.js",
+    "runtime-main.js.map": "/String-Calculator/static/js/runtime-main.75ed3916.js.map",
+    "static/css/2.266e55a5.chunk.css": "/String-Calculator/static/css/2.266e55a5.chunk.css",
+    "static/js/2.30129621.chunk.js": "/String-Calculator/static/js/2.30129621.chunk.js",
+    "static/js/2.30129621.chunk.js.map": "/String-Calculator/static/js/2.30129621.chunk.js.map",
     "index.html": "/String-Calculator/index.html",
-    "precache-manifest.de4799ff30a7c48f8dd9ea338cabe51e.js": "/String-Calculator/precache-manifest.de4799ff30a7c48f8dd9ea338cabe51e.js",
+    "precache-manifest.edfd6b1b8e3cf4f14cb37c3a7359feb4.js": "/String-Calculator/precache-manifest.edfd6b1b8e3cf4f14cb37c3a7359feb4.js",
     "service-worker.js": "/String-Calculator/service-worker.js",
-    "static/css/2.0624914a.chunk.css.map": "/String-Calculator/static/css/2.0624914a.chunk.css.map",
-    "static/css/main.b100e6da.chunk.css.map": "/String-Calculator/static/css/main.b100e6da.chunk.css.map"
+    "static/css/2.266e55a5.chunk.css.map": "/String-Calculator/static/css/2.266e55a5.chunk.css.map",
+    "static/css/main.f59af3de.chunk.css.map": "/String-Calculator/static/css/main.f59af3de.chunk.css.map"
   }
 }
