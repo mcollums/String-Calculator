@@ -105,3 +105,18 @@ describe('startAdd', () => {
     });
 });
 
+describe('Negative numbers should throw an error', () => {
+    test('Error displayed on page', () => {
+        const string = "1,2,3,-4";
+        const wrapper = setup(null, { string });
+
+        const submitButton = wrapper.find("[data-test='submit-button']");
+        submitButton.simulate('click');
+        wrapper.update();
+
+        // find error display see if the class contains hidden
+        const errorDisplay = wrapper.find("[data-test='error-display']");
+        const errorHasHiddenClass = errorDisplay.hasClass('hidden');
+        expect(errorHasHiddenClass).toBe(false);
+    })
+})
