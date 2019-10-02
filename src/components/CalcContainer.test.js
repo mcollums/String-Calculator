@@ -103,10 +103,35 @@ describe('startAdd', () => {
         const resultDisplay = wrapper.find("[data-test='result-display']");
         expect(resultDisplay.text()).toContain(23);
     });
+    test('Numbers over 1000 are ignored.', () => {
+        const string = "1,3\n4,4,5,6\ncat,3000";
+        const wrapper = setup(null, { string });
+
+        const submitButton = wrapper.find("[data-test='submit-button']");
+        submitButton.simulate('click');
+        wrapper.update();
+
+        // find display and test value
+        const resultDisplay = wrapper.find("[data-test='result-display']");
+        expect(resultDisplay.text()).toContain(23);
+    });
 });
 
 describe('Negative numbers should throw an error', () => {
-    test('Error displayed on page', () => {
+    // test('Error Thrown', () => {
+    //     const string = "1,2,3,-4";
+    //     const wrapper = setup(null, { string });
+
+    //     const submitButton = wrapper.find("[data-test='submit-button']");
+    //     submitButton.simulate('click');
+    //     wrapper.update();
+
+    //     // find error display see if the class contains hidden
+    //     const errorDisplay = wrapper.find("[data-test='error-display']");
+    //     const errorHasHiddenClass = errorDisplay.hasClass('hidden');
+    //     expect(wrapper).toThrow(TypeError);
+    // })
+    test('Error to be displayed on page', () => {
         const string = "1,2,3,-4";
         const wrapper = setup(null, { string });
 

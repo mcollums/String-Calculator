@@ -8,3 +8,7 @@
 #infoRow {
   padding-top: 30vh;
 }
+
+#instructionsCol :nth-child(2) {
+  margin-bottom: .2rem;
+}
