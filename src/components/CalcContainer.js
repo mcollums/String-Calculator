@@ -3,10 +3,12 @@ import './CalcContainer.css';
 import Button from './Button'
 import { Container, Row, Col, InputGroup, FormControl } from 'react-bootstrap';
 
-// let customDelimiters = [",", "&"];
+let customDelimiters = [',' , '\n' , '&'];
+const isNum = n => isNaN(n) ? 0 : parseInt(n);
+
 
 class CalculatorContainer extends Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -16,7 +18,7 @@ class CalculatorContainer extends Component {
             message: ""
         };
     }
- 
+
 
     //This tracks any changes to the input box and adds it to the state.
     handleInputChange = (event) => {
@@ -26,28 +28,22 @@ class CalculatorContainer extends Component {
     };
 
 
-
     //This function seperates the string and adds them together.
     startAdd = () => {
-        //check if the element is a number
-        const isNum = n => isNaN(n) ? 0 : parseInt(n);
-        //Splitting the string by commas
-        let newArr = this.state.string.split(",");
+        let string = this.state.string;
 
-        //Only will add two numbers at a time seperated by a comma
-        if (newArr.length !== 2) {
-            this.setState({
-                error: "true",
-                message: "Please enter two items seperated by a comma."
-            });
-        } else {
-            this.setState({
-                message: "",
-                error: "",
-                result: newArr.reduce((a, b) =>
+        //replacing '\n' with ',' because it's a pain
+        let noNString = string.replace('\\n', ',');
+
+        //creating regex to add custom delimiters to the split method
+        let splitArr = noNString.split(new RegExp(customDelimiters.join('|'), 'g'));
+
+        this.setState({
+            message: "",
+            error: "",
+            result: splitArr.reduce((a, b) =>
                 isNum(a) + isNum(b))
-            }); 
-        }
+        });
     };
 
 
@@ -60,17 +56,17 @@ class CalculatorContainer extends Component {
                 <Container>
                     <Row>
                         <Col id="titleCol">
-                            <InputGroup 
-                                onChange={(e) => {this.handleInputChange(e)}}
+                            <InputGroup
+                                onChange={(e) => { this.handleInputChange(e) }}
                                 data-test="input-group"
-                                >
+                            >
                                 <InputGroup.Prepend>
                                     <InputGroup.Text>Your String Here</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl as="textarea" aria-label="With textarea" />
-                                <Button 
+                                <Button
                                     data-test="submit-button"
-                                    id="submitBtn" 
+                                    id="submitBtn"
                                     handleClick={this.startAdd}
                                     message={"Get the Sum!"}
                                     type="submit">

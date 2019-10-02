@@ -51,8 +51,8 @@ describe('Starting State should be blank', () => {
 //FUNCTION TESTS
 describe('startAdd', () => {
     
-    test('String "1,2" should display 3', () => {
-        const string = "1,2";
+    test('String "1,2,3,4,5,6" should display 21', () => {
+        const string = "1,2,3,4,5,6";
         const wrapper = setup(null, { string });
 
         const submitButton = wrapper.find("[data-test='submit-button']");
@@ -61,11 +61,11 @@ describe('startAdd', () => {
 
         // find display and test value
         const resultDisplay = wrapper.find("[data-test='result-display']");
-        expect(resultDisplay.text()).toContain(3);
+        expect(resultDisplay.text()).toContain(21);
     });
 
-    test('String "3,4" should display 7', () => {
-        const string = "3,4";
+    test('String "cat,4,4,5,6,7,frog" should display 26', () => {
+        const string = "cat,4,4,5,6,7,frog";
         const wrapper = setup(null, { string });
 
         const submitButton = wrapper.find("[data-test='submit-button']");
@@ -74,24 +74,11 @@ describe('startAdd', () => {
 
         // find display and test value
         const resultDisplay = wrapper.find("[data-test='result-display']");
-        expect(resultDisplay.text()).toContain(7);
+        expect(resultDisplay.text()).toContain(26);
     });
 
-    test('String "cat,4" should display 4', () => {
-        const string = "cat,4";
-        const wrapper = setup(null, { string });
-
-        const submitButton = wrapper.find("[data-test='submit-button']");
-        submitButton.simulate('click');
-        wrapper.update();
-
-        // find display and test value
-        const resultDisplay = wrapper.find("[data-test='result-display']");
-        expect(resultDisplay.text()).toContain(4);
-    });
-
-    test('Three items in the string should throw an error', () => {
-        const string = "1,3,4";
+    test('Multiple items in the string should not throw an error', () => {
+        const string = "1,2,3,cat";
         const wrapper = setup(null, { string });
 
         const submitButton = wrapper.find("[data-test='submit-button']");
@@ -101,7 +88,20 @@ describe('startAdd', () => {
         // find error display see if the class contains hidden
         const errorDisplay = wrapper.find("[data-test='error-display']");
         const errorHasHiddenClass = errorDisplay.hasClass('hidden');
-        expect(errorHasHiddenClass).toBe(false);
+        expect(errorHasHiddenClass).toBe(true);
+    });
+
+    test('Both "," and "\n" work as delimiters', () => {
+        const string = "1,3\n4,4,5,6\ncat";
+        const wrapper = setup(null, { string });
+
+        const submitButton = wrapper.find("[data-test='submit-button']");
+        submitButton.simulate('click');
+        wrapper.update();
+
+        // find display and test value
+        const resultDisplay = wrapper.find("[data-test='result-display']");
+        expect(resultDisplay.text()).toContain(23);
     });
 });
 
