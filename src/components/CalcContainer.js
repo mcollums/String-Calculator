@@ -3,8 +3,11 @@ import './CalcContainer.css';
 import Button from './Button'
 import { Container, Row, Col, InputGroup, FormControl } from 'react-bootstrap';
 
-let customDelimiters = [',' , '\n' , '&'];
+//Operator to see if input is a number, if not it's made into a 0
 const isNum = n => isNaN(n) ? 0 : parseInt(n);
+
+//Array of custom delimiters
+let customDelimiters = [',' , '\n' , '&'];
 
 
 class CalculatorContainer extends Component {
@@ -28,24 +31,27 @@ class CalculatorContainer extends Component {
     };
 
 
-    //This function seperates the string and adds them together.
+    //This function seperates the string and adds them together as integers.
     startAdd = () => {
-        let string = this.state.string;
-
+        //Array to hold negative Numbers
+        let negArr = [];
         //replacing '\n' with ',' because it's a pain
-        let noNString = string.replace('\\n', ',');
-
+        let noNString = this.state.string.replace('\\n', ',');
         //creating regex to add custom delimiters to the split method
         let splitArr = noNString.split(new RegExp(customDelimiters.join('|'), 'g'));
 
-        let negArr = [];
-
+        //Filtering out values if over 1000 or negative
         for(let i = 0; i <= splitArr.length; i++) {
+            if (splitArr[i] > 1000) {
+                splitArr[i] = 0
+            }
             if (Math.sign(splitArr[i]) === -1) {
                 negArr.push(splitArr[i]);
             }
         }
 
+        //If there are negative numbers, throw user an error. 
+        //Otherwise, add the array together
         if (negArr.length > 0) {
             this.setState({
                 message: `Please change the following integers to positive values: ${negArr} .`,
