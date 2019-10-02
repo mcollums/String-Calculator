@@ -13,7 +13,7 @@ function App() {
         </Col>
         <Col id="instructionsCol">
           <h5 className="text-left"> How it works: </h5>
-          <p className="text-left"> Our String Calculator accepts any string of numbers separated by '\n' or ','. </p>
+          <p className="text-left"> Our String Calculator accepts any positive string of numbers separated by '\n' or ' , '. </p>
         </Col>
       </Row>
 

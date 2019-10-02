@@ -38,12 +38,28 @@ class CalculatorContainer extends Component {
         //creating regex to add custom delimiters to the split method
         let splitArr = noNString.split(new RegExp(customDelimiters.join('|'), 'g'));
 
-        this.setState({
-            message: "",
-            error: "",
-            result: splitArr.reduce((a, b) =>
-                isNum(a) + isNum(b))
-        });
+        let negArr = [];
+
+        for(let i = 0; i <= splitArr.length; i++) {
+            if (Math.sign(splitArr[i]) === -1) {
+                negArr.push(splitArr[i]);
+            }
+        }
+
+        if (negArr.length > 0) {
+            this.setState({
+                message: `Please change the following integers to positive values: ${negArr} .`,
+                error: "true"
+            });
+            // throw new Error ('Negative Numbers not Accepted');
+        } else {
+            this.setState({
+                message: "",
+                error: "",
+                result: splitArr.reduce((a, b) =>
+                    isNum(a) + isNum(b))
+            });
+        }
     };
 
 
