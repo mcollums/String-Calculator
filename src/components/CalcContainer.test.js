@@ -78,7 +78,7 @@ describe('startAdd', () => {
     });
 
     test('Multiple items in the string should not throw an error', () => {
-        const string = "1,3,4,4,5,6,cat";
+        const string = "1,2,3,cat";
         const wrapper = setup(null, { string });
 
         const submitButton = wrapper.find("[data-test='submit-button']");
@@ -89,6 +89,19 @@ describe('startAdd', () => {
         const errorDisplay = wrapper.find("[data-test='error-display']");
         const errorHasHiddenClass = errorDisplay.hasClass('hidden');
         expect(errorHasHiddenClass).toBe(true);
+    });
+
+    test('Both "," and "\n" work as delimiters', () => {
+        const string = "1,3\n4,4,5,6\ncat";
+        const wrapper = setup(null, { string });
+
+        const submitButton = wrapper.find("[data-test='submit-button']");
+        submitButton.simulate('click');
+        wrapper.update();
+
+        // find display and test value
+        const resultDisplay = wrapper.find("[data-test='result-display']");
+        expect(resultDisplay.text()).toContain(23);
     });
 });
 

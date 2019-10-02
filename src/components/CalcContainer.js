@@ -3,7 +3,9 @@ import './CalcContainer.css';
 import Button from './Button'
 import { Container, Row, Col, InputGroup, FormControl } from 'react-bootstrap';
 
-// let customDelimiters = [",", "&"];
+let customDelimiters = [',' , '\n' , '&'];
+const isNum = n => isNaN(n) ? 0 : parseInt(n);
+
 
 class CalculatorContainer extends Component {
     constructor(props) {
@@ -26,18 +28,20 @@ class CalculatorContainer extends Component {
     };
 
 
-
     //This function seperates the string and adds them together.
     startAdd = () => {
-        //check if the element is a number
-        const isNum = n => isNaN(n) ? 0 : parseInt(n);
-        //Splitting the string by commas
-        let newArr = this.state.string.split(",");
+        let string = this.state.string;
+
+        //replacing '\n' with ',' because it's a pain
+        let noNString = string.replace('\\n', ',');
+
+        //creating regex to add custom delimiters to the split method
+        let splitArr = noNString.split(new RegExp(customDelimiters.join('|'), 'g'));
 
         this.setState({
             message: "",
             error: "",
-            result: newArr.reduce((a, b) =>
+            result: splitArr.reduce((a, b) =>
                 isNum(a) + isNum(b))
         });
     };
