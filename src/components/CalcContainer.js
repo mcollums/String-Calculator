@@ -6,7 +6,6 @@ import { Container, Row, Col, InputGroup, FormControl } from 'react-bootstrap';
 //Operator to see if input is a number, if not it's made into a 0
 const numOr0 = (n) => {
     let val = parseInt(n);
-
     if (isNaN(val)) {
         return 0
     } else {
@@ -19,7 +18,6 @@ let delimiterRegex = (delimiter, cb) => {
     let delRegex = delimiter.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
     cb(delRegex);
 }
-
 
 //Array of custom delimiters
 let customDelimiters = [',', '\\n'];
@@ -65,26 +63,36 @@ class CalculatorContainer extends Component {
 
     //Function takes out the delimiter, adds to array and sends string to startAdd()
     handleDelimiter = (string, cb) => {
-        let convertedDel = '';
+        let convertedArr = [];
 
         //Getting the value between // and \n 
-        let del = string.split('//').pop().split('\\n')[0];
+        let delimiter = string.split('//').pop().split('\\n')[0];
 
-        //if the del is surrounded by [] take off [] then convert to regex
-        //if not, convert to regex
-        if (/^\[[\S\s]*]$/.test(del)) {
-            let filter = del.split('[').pop().split(']')[0];
-            delimiterRegex(filter, (regex) => {
-                convertedDel = regex;
-            });
+        //if the delimiter is surrounded by [], remove it then convert to regex and add to converted array
+        //if not, convert to regex and add to converted array
+        if (/^\[[\S\s]*]$/.test(delimiter)) {
+            delimiter.split(/\[|\]/g)
+                .filter((elem) => {
+                    return elem != false;
+                })
+                .map((el) => {
+                    delimiterRegex(el, (regex) => {
+                        convertedArr.push(regex);
+                    })
+                });
+
         } else {
-            delimiterRegex(del, regex => { convertedDel = regex; });
+            delimiterRegex(delimiter, regex => {
+                convertedArr.push(regex);
+            });
         }
 
-        //if the converted regex is not in the array, add it
-        if (!customDelimiters.includes(convertedDel)) {
-            customDelimiters.push(convertedDel);
-        }
+        //See if the element is already in the custom array, if not, add it.
+        convertedArr.forEach((elem) => {
+            if (customDelimiters.indexOf(elem) === -1) {
+                customDelimiters.push(elem);
+            }
+        })
 
         //Take out everything between // and \n then send it to the startAdd function
         let newString = string.split(/\/\/(.*?)\\n/g).pop();
