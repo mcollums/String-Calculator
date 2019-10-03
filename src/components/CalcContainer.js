@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import './CalcContainer.css';
-import Button from './Button'
+import Button from './Button';
+import Delimiters from './Delimiters';
 import { Container, Row, Col, InputGroup, FormControl } from 'react-bootstrap';
 
 //Operator to see if input is a number, if not it's made into a 0
@@ -73,7 +74,7 @@ class CalculatorContainer extends Component {
         if (/^\[[\S\s]*]$/.test(delimiter)) {
             delimiter.split(/\[|\]/g)
                 .filter((elem) => {
-                    return elem != false;
+                    return elem !== false;
                 })
                 .map((el) => {
                     delimiterRegex(el, (regex) => {
@@ -180,6 +181,8 @@ class CalculatorContainer extends Component {
                             <h1 data-test="result-display"> {this.state.result} </h1>
                         </Col>
                     </Row>
+
+                  
                 </Container>
             </div>
         )
