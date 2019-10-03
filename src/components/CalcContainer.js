@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import './CalcContainer.css';
-import Button from './Button'
+import Button from './Button';
+import Delimiters from './Delimiters';
 import { Container, Row, Col, InputGroup, FormControl } from 'react-bootstrap';
 
 //Operator to see if input is a number, if not it's made into a 0
@@ -73,7 +74,7 @@ class CalculatorContainer extends Component {
         if (/^\[[\S\s]*]$/.test(delimiter)) {
             delimiter.split(/\[|\]/g)
                 .filter((elem) => {
-                    return elem != false;
+                    return elem !== false;
                 })
                 .map((el) => {
                     delimiterRegex(el, (regex) => {
@@ -110,10 +111,14 @@ class CalculatorContainer extends Component {
         //Array to hold negative Numbers
         let negArr = [];
         //Filtering out values if over 1000 or negative
-        splitArr.forEach((elem) => {
-            elem > 1000 ? 0 : elem;
-            Math.sign(elem) === -1 ? negArr.push(elem) : elem;
-        })
+        for (let i = 0; i <= splitArr.length; i++) {
+            if (splitArr[i] > 1000) {
+                splitArr[i] = 0
+            }
+            if (Math.sign(splitArr[i]) === -1) {
+                negArr.push(splitArr[i]);
+            }
+        }
 
         //If there are negative numbers, throw user an error. 
         //Otherwise, add the array together
@@ -176,6 +181,8 @@ class CalculatorContainer extends Component {
                             <h1 data-test="result-display"> {this.state.result} </h1>
                         </Col>
                     </Row>
+
+                  
                 </Container>
             </div>
         )
