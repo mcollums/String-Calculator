@@ -175,6 +175,18 @@ describe('startAdd', () => {
         const resultDisplay = wrapper.find("[data-test='result-display']");
         expect(resultDisplay.text()).toContain(8);
     });
+    test('Multiple Delimiters of any length are working', () => {
+        const string = "//[*][!!][r9r]\\n11r9r22*33!!44";
+        const wrapper = setup(null, { string });
+
+        const submitButton = wrapper.find("[data-test='submit-button']");
+        submitButton.simulate('click');
+        wrapper.update();
+
+        // find display and test value
+        const resultDisplay = wrapper.find("[data-test='result-display']");
+        expect(resultDisplay.text()).toContain(110);
+    });
 });
 
 describe('Negative numbers should throw an error', () => {
