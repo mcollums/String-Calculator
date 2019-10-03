@@ -1,5 +1,5 @@
 # String-Calculator
-Calculator that takes in a string on numbers serparated by custom delimiters.
+Calculator that takes in a string on numbers separated by custom delimiters.
 
 ## Technologies
 - Javascript
