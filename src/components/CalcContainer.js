@@ -110,14 +110,10 @@ class CalculatorContainer extends Component {
         //Array to hold negative Numbers
         let negArr = [];
         //Filtering out values if over 1000 or negative
-        for (let i = 0; i <= splitArr.length; i++) {
-            if (splitArr[i] > 1000) {
-                splitArr[i] = 0
-            }
-            if (Math.sign(splitArr[i]) === -1) {
-                negArr.push(splitArr[i]);
-            }
-        }
+        splitArr.forEach((elem) => {
+            elem > 1000 ? 0 : elem;
+            Math.sign(elem) === -1 ? negArr.push(elem) : elem;
+        })
 
         //If there are negative numbers, throw user an error. 
         //Otherwise, add the array together
