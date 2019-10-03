@@ -73,7 +73,7 @@ class CalculatorContainer extends Component {
         if (/^\[[\S\s]*]$/.test(delimiter)) {
             delimiter.split(/\[|\]/g)
                 .filter((elem) => {
-                    return elem !== false;
+                    return elem != false;
                 })
                 .map((el) => {
                     delimiterRegex(el, (regex) => {
