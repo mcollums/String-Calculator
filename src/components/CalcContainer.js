@@ -4,14 +4,25 @@ import Button from './Button'
 import { Container, Row, Col, InputGroup, FormControl } from 'react-bootstrap';
 
 //Operator to see if input is a number, if not it's made into a 0
-const isNum = n => isNaN(n) ? 0 : parseInt(n);
+const numOr0 = (n) => {
+    let val = parseInt(n);
+
+    if (isNaN(val)) {
+        return 0
+    } else {
+        return val
+    }
+}
+
+//Adds escape characters where needed in string
+let delimiterRegex = (delimiter, cb) => {
+    let delRegex = delimiter.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+    cb(delRegex);
+}
+
 
 //Array of custom delimiters
-let customDelimiters = [',', '\n'];
-
-//TODO add a string that is the REGEX code for the // and \n
-
-let chars = "-[]{}()*+?.,\\^$|#s";
+let customDelimiters = [',', '\\n'];
 
 
 class CalculatorContainer extends Component {
@@ -54,35 +65,42 @@ class CalculatorContainer extends Component {
 
     //Function takes out the delimiter, adds to array and sends string to startAdd()
     handleDelimiter = (string, cb) => {
-        //Getting the value between // and \n 
-        let newDel = string.split('//').pop().split('\\n')[0];
+        let convertedDel = '';
 
-        //Seeing if the delimiter is already in the customDelimiter array
-        if (!customDelimiters.includes(newDel || "\\" + newDel)) {
-            //Seeing if the new delimiter is a character that needs an escape '\' 
-            //new delimiter is pushed to the customDelimiter array
-            if (chars.includes(newDel)) {
-                customDelimiters.push("\\" + newDel);
-            } else {
-                customDelimiters.push(newDel);
-            }
+        //Getting the value between // and \n 
+        let del = string.split('//').pop().split('\\n')[0];
+
+        //if the del is surrounded by [] take off [] then convert to regex
+        //if not, convert to regex
+        if (/^\[[\S\s]*]$/.test(del)) {
+            let filter = del.split('[').pop().split(']')[0];
+            delimiterRegex(filter, (regex) => {
+                convertedDel = regex;
+            });
+        } else {
+            delimiterRegex(del, regex => { convertedDel = regex; });
         }
 
-        //Take out everything before the '\n' and send it to the startAdd function
-        let newString = string.split('\\n')[1];
+        //if the converted regex is not in the array, add it
+        if (!customDelimiters.includes(convertedDel)) {
+            customDelimiters.push(convertedDel);
+        }
+
+        //Take out everything between // and \n then send it to the startAdd function
+        let newString = string.split(/\/\/(.*?)\\n/g).pop();
         cb(newString);
     }
 
     makeNumArr = (string) => {
+        // replacing '\n' with ',' because it's a pain
+        let noNString = string.replace(/\\n/g, ',');
+        //create regex from custom delimiter array
+        let customRegex = new RegExp(customDelimiters.join('|'), 'g');
+        //split array by the custom delimiters
+        let splitArr = noNString.split(customRegex);
+
         //Array to hold negative Numbers
         let negArr = [];
-
-        //replacing '\n' with ',' because it's a pain
-        let noNString = string.replace(/\\n/g, ',');
-
-        //creating regex to add custom delimiters to the split method
-        let splitArr = noNString.split(new RegExp(customDelimiters.join('|'), 'g'));
-
         //Filtering out values if over 1000 or negative
         for (let i = 0; i <= splitArr.length; i++) {
             if (splitArr[i] > 1000) {
@@ -114,7 +132,7 @@ class CalculatorContainer extends Component {
             message: "",
             error: "",
             result: arr.reduce((a, b) =>
-                isNum(a) + isNum(b))
+                numOr0(a) + numOr0(b))
         });
     };
 
