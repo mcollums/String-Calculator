@@ -7,7 +7,11 @@ import { Container, Row, Col, InputGroup, FormControl } from 'react-bootstrap';
 const isNum = n => isNaN(n) ? 0 : parseInt(n);
 
 //Array of custom delimiters
-let customDelimiters = [',','\n'];
+let customDelimiters = [',', '\n'];
+
+//TODO add a string that is the REGEX code for the // and \n
+
+let chars = "-[]{}()*+?.,\\^$|#s";
 
 
 class CalculatorContainer extends Component {
@@ -32,56 +36,50 @@ class CalculatorContainer extends Component {
     };
 
     handleSubmit = () => {
+        //Clear any errors
         this.setState({
             error: "",
             message: ""
         })
+        //If the string starts with the // we know they're going to make a new delimiter
         if (this.state.string.startsWith("//")) {
-            this.handleDelimiters(this.state.string, (newString) => {
-                console.log("CB for handle delimiters");
-                this.startAdd(newString);
+            this.handleDelimiter(this.state.string, (newString) => {
+                //Use the callback to send string without the new delimiter
+                this.makeNumArr(newString);
             });
         } else {
-            this.startAdd(this.state.string);
+            this.makeNumArr(this.state.string);
         }
     }
 
-    handleDelimiters = (string, callback) => {
-         //replacing '\n' with ',' because it's a pain
-        let noNString = string.replace("\\n", 'placeholder');
-        console.log("NEW STRING WITH NO N===========");
-        console.log(noNString);
+    //Function takes out the delimiter, adds to array and sends string to startAdd()
+    handleDelimiter = (string, cb) => {
+        //Getting the value between // and \n 
+        let newDel = string.split('//').pop().split('\\n')[0];
 
-        //Getting the value between // and where \n was
-        let newDel = noNString.split('//').pop().split('placeholder')[0];
-        console.log("NEW DELIMIETER===========");
-        console.log(newDel);
-
-        if(!customDelimiters.includes(newDel)) {
-            customDelimiters.push(newDel);
-            console.log("ALL DELIMIETERS===========");
-            console.log(customDelimiters);
-        } else {
-            console.log("This delimiter already exists");
+        //Seeing if the delimiter is already in the customDelimiter array
+        if (!customDelimiters.includes(newDel || "\\" + newDel)) {
+            //Seeing if the new delimiter is a character that needs an escape '\' 
+            //new delimiter is pushed to the customDelimiter array
+            if (chars.includes(newDel)) {
+                customDelimiters.push("\\" + newDel);
+            } else {
+                customDelimiters.push(newDel);
+            }
         }
 
-        let newString = noNString.split('placeholder')[1];
-        console.log("NEW STRING===========");
-        console.log(newString);
-
-        callback(newString);
+        //Take out everything before the '\n' and send it to the startAdd function
+        let newString = string.split('\\n')[1];
+        cb(newString);
     }
 
-
-    //This function seperates the string and adds them together as integers.
-    startAdd = (string) => {
+    makeNumArr = (string) => {
         //Array to hold negative Numbers
         let negArr = [];
+
         //replacing '\n' with ',' because it's a pain
-        let noNString = string.replace('\\n', ',');
-        let newRegExp = new RegExp(customDelimiters.join('|'), 'g');
-        console.log("REG EXPRESSION===========");
-        console.log(newRegExp);
+        let noNString = string.replace(/\\n/g, ',');
+
         //creating regex to add custom delimiters to the split method
         let splitArr = noNString.split(new RegExp(customDelimiters.join('|'), 'g'));
 
@@ -106,13 +104,18 @@ class CalculatorContainer extends Component {
             // Having trouble running this with the unit tests so it's commented out for now.
             // throw new Error ('Negative Numbers not Accepted');
         } else {
-            this.setState({
-                message: "",
-                error: "",
-                result: splitArr.reduce((a, b) =>
-                    isNum(a) + isNum(b))
-            });
-        }
+            this.startAdd(splitArr);
+        };
+    }
+
+    //This function seperates the string and adds them together as integers.
+    startAdd = (arr) => {
+        this.setState({
+            message: "",
+            error: "",
+            result: arr.reduce((a, b) =>
+                isNum(a) + isNum(b))
+        });
     };
 
 
